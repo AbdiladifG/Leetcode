@@ -11,14 +11,15 @@
  * @return {boolean}
  */
 var isBalanced = function(root) {
+    let res = true
     if(!root) return true
-    function findDepth(root){
-        if(!root) return 0;
-        return Math.max(findDepth(root.left), findDepth(root.right)) + 1 
+    function maxDepth(node){
+        if(!node) return 0;
+        let left = maxDepth(node.left)
+        let right = maxDepth(node.right)
+        if(Math.abs(left -right) > 1) res = false
+        return Math.max(left, right) + 1
     }
-
-    if(Math.abs(findDepth(root.left)- findDepth(root.right))> 1){
-        return false
-    }
-    return isBalanced(root.left) && isBalanced(root.right)
+    maxDepth(root)
+    return res
 };
